@@ -1,0 +1,63 @@
++----------------------+
+|      Metadata        |
++----------------------+
+| - name: String       |
+| - size: long         |
+| - createdAt: Date    |
+| - modifiedAt: Date   |
++----------------------+
+| + getName(): String  |
+| + setName(String)    |
+| + getSize(): long    |
+| + setSize(long)      |
+| + getCreatedAt(): Date |
+| + getModifiedAt(): Date |
+| + updateModifiedTime() |
++----------------------+
+
+           ▲ used by
+           |
++----------------------+             +--------------------------+
+|        File          |<>----------►|      FileVersion         |
++----------------------+             +--------------------------+
+| - id: UUID           |             | - version: int           |
+| - metadata: Metadata |             | - content: String        |
+| - versions: List<>   |             | - timestamp: Date        |
++----------------------+             +--------------------------+
+| + addVersion(String) |             | + getVersion(): int      |
+| + getCurrentContent()|             | + getContent(): String   |
+| + getVersions(): List|             | + getTimestamp(): Date   |
+| + rollbackToVersion(int)           |
+| + getMetadata()                   |
++----------------------+
+
+           ▲ used by
+           |
++------------------------------+
+|           Folder            |
++------------------------------+
+| - id: UUID                  |
+| - metadata: Metadata        |
+| - files: Map<String, File>  |
+| - subFolders: Map<String, Folder> |
++------------------------------+
+| + getFiles(): Map           |
+| + getSubFolders(): Map      |
+| + getMetadata()             |
++------------------------------+
+
++----------------------------------+
+|        FileSystemService        |
++----------------------------------+
+| - root: Folder                  |
++----------------------------------+
+| + createFolder(String)          |
+| + uploadFile(String, String)    |
+| + readFile(String): String      |
+| + deleteFile(String)            |
+| + listFolder(String)            |
+| + rollbackToVersion(String, int)|
+| + listVersions(String)          |
+| - navigateToFolder(String, boolean): Folder |
+| - getFile(String): File         |
++----------------------------------+

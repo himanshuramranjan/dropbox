@@ -33,6 +33,7 @@ public class File {
             throw new IllegalArgumentException("Invalid version number");
         }
         FileVersion version = versions.get(versionNumber - 1);
+        // Ideally we should remove the other versions till the given version number
         addVersion(version.getContent());
     }
 

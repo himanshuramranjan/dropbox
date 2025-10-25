@@ -1,0 +1,16 @@
+> In FileSystemService, instead of having a complete path that includes both the folder path and the 
+file/folder name, we could split these into separate parameters for the methods like createFile, createFolder, uploadFile :
+
+The current design with a single path parameter is more appropriate for a Dropbox-like system because:
+
+It matches the mental model of file systems that users and developers are familiar with
+Reduces the chance of path joining errors
+Makes it easier to validate complete paths in one go
+Simplifies the API surface area
+
+
+However, you could potentially have both:
+
+Keep the current API for simplicity
+Add overloaded methods that take separate path and name parameters for cases where that flexibility is needed
+This way you get the best of both worlds while maintaining backward compatibility
